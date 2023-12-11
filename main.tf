@@ -16,7 +16,7 @@ resource "aws_iam_role" "bs-cluster" {
       {
         Effect = "Allow",
         Principal = {
-          Service = "eks.amazonaws.com"
+          Service = ["ec2.amazonaws.com"]
         },
         Action = "sts:AssumeRole"
       }
@@ -74,7 +74,7 @@ resource "aws_iam_role" "bs-node" {
       {
         Effect = "Allow",
         Principal = {
-          Service = "eks.amazonaws.com"
+          Service = ["ec2.amazonaws.com"]
 		}
         Action = "sts:AssumeRole"
       }
