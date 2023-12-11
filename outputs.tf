@@ -14,7 +14,6 @@ output "eks_cluster_endpoint" {
   value = aws_eks_cluster.bs-up-running.endpoint
 }
 
-output "eks_cluster_nodepoint" {
+output "eks_cluster_nodegroup_id" {
   value = aws_eks_node_group.bs-node-group.id
 }
-
