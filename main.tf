@@ -123,25 +123,23 @@ resource "aws_eks_node_group" "bs-node-group" {
 
 # Kubeconfig generate accordign to cluster definition
 resource "local_file" "kubeconfig" {
-  filename = "kubeconfig"
-
-  content = <<KUBECONFIG
+  content  = <<KUBECONFIG
 apiVersion: v1
 clusters:
 - cluster:
-    certificate-authority-data: "${aws_eks_cluster.bs-up-running.certificate_authority[0].data}"
-    server: "${aws_eks_cluster.bs-up-running.endpoint}"
-  name: "${aws_eks_cluster.bs-up-running.arn}"
+    certificate-authority-data: ${aws_eks_cluster.bs-up-running.certificate_authority.0.data}
+    server: ${aws_eks_cluster.bs-up-running.endpoint}
+  name: ${aws_eks_cluster.bs-up-running.arn}
 contexts:
 - context:
-    cluster: "${aws_eks_cluster.bs-up-running.arn}"
-    user: "${aws_eks_cluster.bs-up-running.arn}"
-  name: "${aws_eks_cluster.bs-up-running.arn}"
-current_context: "${aws_eks_cluster.bs-up-running.arn}"
+    cluster: ${aws_eks_cluster.bs-up-running.arn}
+    user: ${aws_eks_cluster.bs-up-running.arn}
+  name: ${aws_eks_cluster.bs-up-running.arn}
+current-context: ${aws_eks_cluster.bs-up-running.arn}
 kind: Config
 preferences: {}
 users:
-- name: "${aws_eks_cluster.bs-up-running.arn}"
+- name: ${aws_eks_cluster.bs-up-running.arn}
   user:
     exec:
       apiVersion: client.authentication.k8s.io/v1alpha1
@@ -150,5 +148,6 @@ users:
         - "token"
         - "-i"
         - "${aws_eks_cluster.bs-up-running.name}"
-KUBECONFIG
+    KUBECONFIG
+  filename = "kubeconfig"
 }
